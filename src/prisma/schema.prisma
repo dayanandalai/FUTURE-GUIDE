@@ -29,13 +29,3 @@ model User {
   updatedAt    DateTime   @updatedAt
 }
 
-model Exchange {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String    @db.ObjectId
-  partnerId     String    @db.ObjectId
-  skillOffered  String
-  skillRequested String
-  status        String    @default("pending") // pending, accepted, rejected, completed
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-}
