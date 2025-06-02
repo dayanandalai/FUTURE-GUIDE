@@ -45,7 +45,7 @@ export default function SignIn() {
       })
 
       // Use window.location for navigation
-      window.location.href = '/dashboard'
+      window.location.href = '/src/app/page.tsx'
 
     } catch (error) {
       console.error('Signin error:', error)
@@ -60,9 +60,12 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+    
+    <div className="min-h-screen flex flex-col items-center justify-center   bg-background">
       {/* <Header /> Removed Header component */}
-      <main className="flex items-center justify-center">
+         <div className='item-start justify-start w-full sm:pl-30 px-10'> haaaaa</div>
+      <main className="flex items-end justify-end w-full sm:pr-50 px-10">
+        
         <Card className="w-[350px]">
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
