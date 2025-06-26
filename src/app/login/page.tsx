@@ -45,7 +45,7 @@ export default function SignIn() {
       })
 
       // Use window.location for navigation
-      window.location.href = '/src/app/page.tsx'
+      window.location.href = '/'
 
     } catch (error) {
       console.error('Signin error:', error)

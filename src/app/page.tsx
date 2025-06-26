@@ -1,17 +1,29 @@
+'use client'
 // app/page.tsx
 import Image from 'next/image';
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { useRouter } from 'next/navigation'; // ✅ Import router for navigation
 
 // Replace with your actual image paths in the /public folder
 const treeImageSrc = '/image-tree-on-cliff.jpg'; 
 const ctaBgImageSrc = '/image-cta-background.jpg';
 
 export default function HomePage() {
+  const router = useRouter(); // ✅ Setup router instance
   // Generic button click handler for demonstration
   const handleButtonClick = (actionName: string) => {
     alert(`Button "${actionName}" clicked!`);
   };
+  const loginButtonClick = (actionName: string) => {
+    console.log(`Button "${actionName}" clicked!`);
+    router.push('/login'); // ✅ Navigate to login page
+  };
+  const signupButtonClick = (actionName: string) => {
+    console.log(`Button "${actionName}" clicked!`);
+    router.push('/signup'); // ✅ Navigate to login page
+  };
+
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-100">
@@ -42,7 +54,7 @@ export default function HomePage() {
             <div className="space-x-3 md:space-x-6 text-xs md:text-sm">
               <Link href="#" className="hover:text-slate-600">HOME</Link>
               <Link href="#" className="hover:text-slate-600">GUIDE</Link>
-              <button onClick={() => handleButtonClick('Login (Nav)')} className="hover:text-slate-600">LOGIN</button>
+              <Link href="/login" className="hover:text-slate-600">LOGIN</Link>
             </div>
           </nav>
 
@@ -54,7 +66,7 @@ export default function HomePage() {
               </h1>
               <button
                 onClick={() => handleButtonClick('Start')}
-                className="bg-white text-slate-800 py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
+                className="bg-white text-slate-800 py-2.5 px-7 mt-10 ml-25 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
               >
                 START
               </button>
@@ -68,8 +80,8 @@ export default function HomePage() {
                 ACT WITH<br />PURPOSE
               </h1>
               <button
-                onClick={() => handleButtonClick('Login (Hero)')}
-                className="bg-white text-slate-800 py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
+                onClick={() => loginButtonClick('Login (Hero)')}
+                className="bg-white text-slate-800 py-2.5 px-7 mt-10 mr-25 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
               >
                 Login
               </button>
@@ -162,7 +174,7 @@ export default function HomePage() {
               Learn More
             </button>
             <button 
-              onClick={() => handleButtonClick('Sign Up (Path Section)')} 
+              onClick={() => signupButtonClick('signup (Hero)')}
               className="text-white hover:underline font-semibold text-sm"
             >
               Sign Up →
@@ -182,7 +194,7 @@ export default function HomePage() {
             Join us for personalized career guidance and planning tools tailored just for you.
           </p>
           <button
-            onClick={() => handleButtonClick('Sign Up (CTA)')}
+            onClick={() => signupButtonClick('signup (Hero)')}
             className="bg-white text-slate-800 py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
           >
             Sign Up
