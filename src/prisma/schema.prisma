@@ -35,3 +35,16 @@ model Subject {
   description String
 }
 
+model art_Subject {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String @unique
+  description String
+  category    String // <-- ADD THIS LINE
+}
+
+model technical_subject {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String @unique
+  description String
+  category    String // <-- ADD THIS LINE
+}

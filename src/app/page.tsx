@@ -1,89 +1,91 @@
-'use client'
 // app/page.tsx
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-import { useRouter } from 'next/navigation'; // ✅ Import router for navigation
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 // Replace with your actual image paths in the /public folder
-const treeImageSrc = '/image-tree-on-cliff.jpg'; 
-const ctaBgImageSrc = '/image-cta-background.jpg';
+const treeImageSrc = '/images/image-tree-on-cliff.png';
+const ctaBgImageSrc = '/images/image-cta-background.png';
+
+// Colors for the hero gradient (approximated from your image)
+const HERO_GRADIENT_FROM = '#0D6EFF'; // Vibrant Blue
+const HERO_GRADIENT_VIA = '#D6000E';  // Strong Red (Center)
+const HERO_GRADIENT_TO = '#0D6EFF';   // Vibrant Blue
 
 export default function HomePage() {
-  const router = useRouter(); // ✅ Setup router instance
-  // Generic button click handler for demonstration
-  const handleButtonClick = (actionName: string) => {
-    alert(`Button "${actionName}" clicked!`);
-  };
-  const loginButtonClick = (actionName: string) => {
-    console.log(`Button "${actionName}" clicked!`);
-    router.push('/login'); // ✅ Navigate to login page
-  };
-  const signupButtonClick = (actionName: string) => {
-    console.log(`Button "${actionName}" clicked!`);
-    router.push('/signup'); // ✅ Navigate to login page
-  };
+  const router = useRouter(); // Initialize the router
 
+  // Generic button click handler for demonstration (for buttons not navigating yet)
+  const handleAlertClick = (actionName: string) => {
+    alert(`Button "${actionName}" clicked! This button does not navigate yet.`);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-100">
       {/* --- Section 1: Hero --- */}
-      <section className="relative min-h-[calc(90vh)] md:min-h-[calc(85vh)] bg-[#A9D0E1] text-slate-800 overflow-hidden">
-        {/* Central Red Column - Visual Element */}
-        <div className="absolute top-0 bottom-0 left-1/4 right-1/4 w-1/2 bg-[#9B1C1C] z-0">
-          {/* ELEVATE logo in the red bar */}
-          <div className="absolute top-5 md:top-6 left-1/2 -translate-x-1/2 text-white text-xl md:text-2xl font-bold">
+      <section
+        className="relative min-h-[calc(90vh)] md:min-h-[calc(85vh)] text-white overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${HERO_GRADIENT_FROM}, ${HERO_GRADIENT_VIA}, ${HERO_GRADIENT_TO})`
+        }}
+      >
+        {/* Decorative side text "ELEVATE" */}
+        <div className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 transform -rotate-90 text-xs md:text-sm tracking-widest text-white opacity-70 hidden lg:block">
+          ELEVATE
+        </div>
+        <div className="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 transform -rotate-90 text-xs md:text-sm tracking-widest text-white opacity-70 hidden lg:block">
+          ELEVATE
+        </div>
+
+        <div className="relative z-10 container mx-auto px-5 h-full flex flex-col">
+          {/* ELEVATE logo at the top center */}
+          <div className="absolute top-5 md:top-6 left-1/2 -translate-x-1/2 text-white text-xl md:text-2xl font-bold z-20">
             ELEVATE
           </div>
-        </div>
 
-        {/* Decorative side text "ELEVATE" */}
-        <div className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 transform -rotate-90 text-xs md:text-sm tracking-widest text-gray-600/70 opacity-75 hidden lg:block">
-          ELEVATE
-        </div>
-        <div className="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 transform -rotate-90 text-xs md:text-sm tracking-widest text-gray-600/70 opacity-75 hidden lg:block">
-          ELEVATE
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col">
           {/* Navigation Bar */}
-          <nav className="py-5 md:py-6 flex justify-between items-center">
-            <Link href="/" className="text-lg md:text-xl font-bold text-slate-800">
+          <nav className="py-5 md:py-15 flex justify-between items-center relative z-10">
+            <Link href="/" className="text-lg md:text-xl font-bold text-white">
               FUTURE GUIDE
             </Link>
-            <div className="space-x-3 md:space-x-6 text-xs md:text-sm">
-              <Link href="#" className="hover:text-slate-600">HOME</Link>
-              <Link href="#" className="hover:text-slate-600">GUIDE</Link>
-              <Link href="/login" className="hover:text-slate-600">LOGIN</Link>
+            <div className="space-x-3 md:space-x-6 text-xs md:text-sm text-white">
+              <Link href="#" className="hover:text-gray-300">HOME</Link>
+              <Link href="#" className="hover:text-gray-300">GUIDE</Link>
+              {/* UPDATED NAV LOGIN BUTTON */}
+              <button onClick={() => router.push('/login')} className="hover:text-gray-400">LOGIN</button>
             </div>
           </nav>
 
           {/* Hero Content */}
-          <div className="flex-grow flex flex-col md:flex-row items-center justify-around pt-10 pb-16 md:pt-12">
+          <div className="flex-grow flex flex-col md:flex-row items-center justify-around pt-10 pb-16 md:pt-40">
             <div className="text-center md:text-left mb-12 md:mb-0 md:w-2/5">
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-[5rem] font-bold mb-6 leading-tight">
                 PLAN YOUR<br />FUTURE
               </h1>
+              {/* UPDATED START BUTTON */}
               <button
-                onClick={() => handleButtonClick('Start')}
-                className="bg-white text-slate-800 py-2.5 px-7 mt-10 ml-25 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
+                onClick={() => router.push('/start')}
+                className="bg-gray-200 text-gray-800 py-2.5 px-7 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-0"
               >
-                START
+                <span>→</span> <span>START</span>
               </button>
             </div>
-            
-            {/* Spacer for the red column area, only for layout */}
+
             <div className="w-1/5 hidden md:block" aria-hidden="true"></div>
 
             <div className="text-center md:text-right md:w-2/5">
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-[5rem] font-bold mb-6 leading-tight">
                 ACT WITH<br />PURPOSE
               </h1>
+              {/* UPDATED HERO LOGIN BUTTON */}
               <button
-                onClick={() => loginButtonClick('Login (Hero)')}
-                className="bg-white text-slate-800 py-2.5 px-7 mt-10 mr-25 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
+                onClick={() => router.push('/login')}
+                className="bg-gray-200 text-gray-800 py-2.5 px-7 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-120"
               >
-                Login
+                 <span>LOGIN</span> <span>←</span>
               </button>
             </div>
           </div>
@@ -91,7 +93,7 @@ export default function HomePage() {
       </section>
 
       {/* --- Section 2: Unlock Your Future Intro --- */}
-      <section className="py-12 md:py-20 bg-[#A9D0E1] text-slate-800">
+      <section className="py-12 md:py-40 bg-[#A9D0E9] text-slate-800">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
             <div className="md:w-1/2">
@@ -120,7 +122,7 @@ export default function HomePage() {
               <h3 className="text-lg md:text-xl font-semibold mb-2.5">{feature.title}</h3>
               <p className="text-slate-700 mb-4 text-xs md:text-sm flex-grow">{feature.desc}</p>
               <button
-                onClick={() => handleButtonClick(feature.buttonText)}
+                onClick={() => handleAlertClick(feature.buttonText)} // Using alert for these for now
                 className="mt-auto bg-white text-slate-800 py-2 px-5 rounded-md font-medium hover:bg-gray-200 transition-colors shadow-sm text-xs"
               >
                 {feature.buttonText}
@@ -131,7 +133,7 @@ export default function HomePage() {
       </section>
 
       {/* --- Section 4: Your Path to a Successful Career --- */}
-      <section className="py-12 md:py-20 bg-[#9B1C1C] text-white">
+      <section className="py-12 md:py-20 bg-[#D6000E] text-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">
             Your Path to a Successful Career
@@ -139,6 +141,7 @@ export default function HomePage() {
           <p className="text-center text-gray-200 mb-10 md:mb-14 max-w-xl mx-auto text-sm md:text-base">
             At Future Guide, we empower students with personalized career planning. Our step-by-step approach ensures clarity and direction.
           </p>
+          {/* ... (image and text content) ... */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div className="space-y-6 md:space-y-8 text-center md:text-left">
               <div>
@@ -150,9 +153,9 @@ export default function HomePage() {
                 <p className="text-gray-300 text-xs md:text-sm">Develop a personalized action plan that aligns with your career goals.</p>
               </div>
             </div>
-            
+
             <div className="relative w-full aspect-[4/3] max-w-sm mx-auto md:max-w-none rounded-lg overflow-hidden shadow-xl">
-              <Image src={treeImageSrc} alt="Scenic view of a tree on a cliff" layout="fill" objectFit="cover" />
+              <Image src={treeImageSrc} alt="Scenic view of a tree on a cliff" fill objectFit="cover" />
             </div>
 
             <div className="space-y-6 md:space-y-8 text-center md:text-left">
@@ -168,13 +171,13 @@ export default function HomePage() {
           </div>
           <div className="mt-10 md:mt-14 text-center">
             <button
-              onClick={() => handleButtonClick('Learn More')}
+              onClick={() => handleAlertClick('Learn More')} // Using alert for this for now
               className="bg-white text-[#9B1C1C] py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors mr-3 shadow-md text-sm"
             >
               Learn More
             </button>
-            <button 
-              onClick={() => signupButtonClick('signup (Hero)')}
+            <button
+              onClick={() => handleAlertClick('Sign Up (Path Section)')} // Using alert for this for now
               className="text-white hover:underline font-semibold text-sm"
             >
               Sign Up →
@@ -186,7 +189,7 @@ export default function HomePage() {
       {/* --- Section 5: Unlock Your Future Today CTA --- */}
       <section className="relative py-20 md:py-28 text-white">
         <div className="absolute inset-0 z-0">
-          <Image src={ctaBgImageSrc} alt="Abstract background for CTA" layout="fill" objectFit="cover" className="brightness-[0.4]" />
+          <Image src={ctaBgImageSrc} alt="Abstract background for CTA" fill objectFit="cover" className="brightness-[0.4]" />
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Unlock Your Future Today</h2>
@@ -194,7 +197,7 @@ export default function HomePage() {
             Join us for personalized career guidance and planning tools tailored just for you.
           </p>
           <button
-            onClick={() => signupButtonClick('signup (Hero)')}
+            onClick={() => handleAlertClick('Sign Up (CTA)')} // Using alert for this for now
             className="bg-white text-slate-800 py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
           >
             Sign Up
@@ -205,6 +208,7 @@ export default function HomePage() {
       {/* --- Footer --- */}
       <footer className="py-10 md:py-14 bg-[#A9D0E1] text-slate-700">
         <div className="container mx-auto px-4">
+          {/* ... (footer content) ... */}
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8">
             <div className="text-xl md:text-2xl font-bold text-slate-800 mb-4 md:mb-0">ELEVATE</div>
             <nav className="flex space-x-4 md:space-x-6 text-sm">
@@ -218,13 +222,13 @@ export default function HomePage() {
               <div className="flex space-x-3">
                 <Link href="#" className="hover:text-slate-900">Privacy Policy</Link>
                 <Link href="#" className="hover:text-slate-900">Terms of Service</Link>
-                <button onClick={() => handleButtonClick('Cookie Settings')} className="hover:text-slate-900">Cookie Settings</button>
+                <button onClick={() => handleAlertClick('Cookie Settings')} className="hover:text-slate-900">Cookie Settings</button>
               </div>
               <div className="flex space-x-3 text-slate-600">
                 <Link href="#" aria-label="Facebook"><Facebook size={18} className="hover:text-slate-900" /></Link>
                 <Link href="#" aria-label="Twitter"><Twitter size={18} className="hover:text-slate-900" /></Link>
                 <Link href="#" aria-label="LinkedIn"><Linkedin size={18} className="hover:text-slate-900" /></Link>
-                <Link href="#" aria-label="Instagram"><Instagram size={18} className="hover:text-slate-900" /></Link> {/* Assuming IN icon is Instagram */}
+                <Link href="#" aria-label="Instagram"><Instagram size={18} className="hover:text-slate-900" /></Link>
               </div>
             </div>
           </div>

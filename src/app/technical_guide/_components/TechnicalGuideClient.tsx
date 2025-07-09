@@ -12,7 +12,7 @@ interface GuideClientProps {
   }[];
 }
 
-export default function GuideClient({ subjects }: GuideClientProps) {
+export default function TechnicalGuideClient({ subjects }: GuideClientProps) {
   
   // State to keep track of the currently selected subject
   const [selectedSubject, setSelectedSubject] = useState<GuideClientProps['subjects'][number] | null>(null);
@@ -86,8 +86,8 @@ export default function GuideClient({ subjects }: GuideClientProps) {
 
               <div className="flex items-center justify-center">
              <button
-                onClick={() => router.push('/start')}
-                className=" fixed bottom-5 bg-gray-200 text-gray-800 py-2.5 px-7 w-32 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-0"
+                onClick={() => router.push('/btech_cse')}
+                className="bg-gray-200 text-gray-800 py-2.5 px-7 w-32 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-0 mt-8"
               >
                 <span>→</span> <span>CHOOSE</span>
               </button>
