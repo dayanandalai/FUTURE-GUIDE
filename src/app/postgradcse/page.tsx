@@ -72,7 +72,10 @@ export default function PostgraduateDegreesPage() {
              <button
                 key={topic.key}
                 onMouseEnter={() => setActiveTopicKey(topic.key)}
-                onClick={() => router.push(topic.href)}
+                onClick={() => {
+                  if (topic.key === 'mtech') router.push('/csemtech');
+                  else router.push(topic.href);
+                }}
                 className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none"
               >
                 {topic.title}

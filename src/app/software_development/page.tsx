@@ -33,9 +33,9 @@ const devTopics = [
 export default function SoftwareDevelopmentPage() {
   const router = useRouter();
 
-  // Default description state
-  const defaultTitle = "SOFTWARE DEVELOPMENT";
-  const defaultDescription = "Hover over any field to see a brief description. Click to explore detailed career paths and opportunities.";
+  // Default description and title use the first topic (webstack)
+  const defaultTitle = devTopics[0].title;
+  const defaultDescription = devTopics[0].description;
   const [activeTopicKey, setActiveTopicKey] = useState<string | null>(null);
   const activeTopic = devTopics.find(topic => topic.key === activeTopicKey);
 
