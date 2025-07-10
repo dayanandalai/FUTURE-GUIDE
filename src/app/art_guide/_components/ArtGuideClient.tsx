@@ -11,6 +11,7 @@ interface ArtGuideClientProps {
 
 export default function ArtGuideClient({ subjects }: ArtGuideClientProps) {
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
+  const [hoveredSubject, setHoveredSubject] = useState<Subject | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function ArtGuideClient({ subjects }: ArtGuideClientProps) {
   }
 
   return (
-    <main className="relative min-h-screen w-full bg-gradient-to-b from-[#87c4d5] to-[#599eb9] text-black font-sans overflow-hidden flex flex-col">
+    <main className="relative min-h-screen w-full bg-gradient-to-b from-[#87c4d5] to-[#599eb9] text-black font-[Poppins] overflow-hidden flex flex-col">
       {/* Header Section */}
       <header className="flex justify-between items-center w-full px-12 pt-8 pb-4">
         <h1 className="text-xl font-bold tracking-wider">FUTURE GUIDE</h1>
@@ -54,12 +55,21 @@ export default function ArtGuideClient({ subjects }: ArtGuideClientProps) {
             {subjects.map((subject) => (
               <button
                 key={subject.id}
-                className={`w-full py-3 px-4 rounded-full font-bold text-lg bg-white hover:bg-[#e0e0e0] transition-colors border-2 border-black shadow text-black ${
+                className={`w-full py-3 px-4 rounded-full font-normal text-lg bg-white hover:bg-[#e0e0e0] transition-colors border-2 border-black shadow text-black ${
                   selectedSubject?.id === subject.id
                     ? 'bg-[#fff] border-4 border-[#222]'
                     : ''
                 }`}
-                onClick={() => setSelectedSubject(subject)}
+                onMouseEnter={() => setHoveredSubject(subject)}
+                onMouseLeave={() => setHoveredSubject(null)}
+                onClick={() => {
+                  // Route based on subject name (slugify for path)
+                  const slug = subject.name
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '_')
+                    .replace(/^_|_$/g, '');
+                  router.push(`/${slug}`);
+                }}
               >
                 {subject.name}
               </button>
@@ -68,25 +78,31 @@ export default function ArtGuideClient({ subjects }: ArtGuideClientProps) {
         </aside>
         {/* Main Content */}
         <section className="flex-1 flex flex-col items-center justify-center relative">
-          {selectedSubject && (
+          {hoveredSubject ? (
             <div className="bg-[#e0f7fa] bg-opacity-90 rounded-3xl p-12 shadow-lg max-w-2xl w-full mt-8 ml-auto mr-32 flex flex-col items-center">
-              <h3 className="text-3xl font-bold mb-6 text-center tracking-wide">
+              <h3 className="text-3xl font-normal mb-6 text-center tracking-wide">
+                {hoveredSubject.name}
+              </h3>
+              <p
+                className="text-lg font-normal text-black text-center tracking-wide"
+                style={{ fontFamily: 'monospace' }}
+              >
+                {hoveredSubject.description}
+              </p>
+            </div>
+          ) : selectedSubject ? (
+            <div className="bg-[#e0f7fa] bg-opacity-90 rounded-3xl p-12 shadow-lg max-w-2xl w-full mt-8 ml-auto mr-32 flex flex-col items-center">
+              <h3 className="text-3xl font-normal mb-6 text-center tracking-wide">
                 {selectedSubject.name}
               </h3>
               <p
-                className="text-lg font-semibold text-black text-center tracking-wide"
+                className="text-lg font-normal text-black text-center tracking-wide"
                 style={{ fontFamily: 'monospace' }}
               >
                 {selectedSubject.description}
               </p>
-              <button
-                onClick={() => router.push('/start')}
-                className="mt-8 bg-gray-200 text-gray-800 py-2.5 px-7 w-32 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2"
-              >
-                <span>→</span> <span>CHOOSE</span>
-              </button>
             </div>
-          )}
+          ) : null}
         </section>
       </div>
       {/* Vertical ELEVATE text with space */}

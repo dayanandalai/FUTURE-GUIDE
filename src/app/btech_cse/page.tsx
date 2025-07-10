@@ -29,8 +29,23 @@ const tabs = [
 
 
 export default function Page() {
-  // State to track the active tab, defaulting to 'jobs'
-  const [activeTab, setActiveTab] = useState('jobs');
+  // State to track the hovered tab, defaulting to null
+  const [hoveredTab, setHoveredTab] = useState<keyof typeof contentData | null>(null);
+
+  // Default description
+  const defaultTitle = contentData.jobs.title;
+  const defaultDescription = contentData.jobs.description;
+
+  // Determine which tab's content to show (hovered or default)
+  const displayTab = hoveredTab;
+  const displayContent = displayTab ? contentData[displayTab] : { title: defaultTitle, description: defaultDescription };
+
+  // Handle navigation for each tab
+  const handleTabClick = (tabKey: keyof typeof contentData) => {
+    if (tabKey === 'jobs') window.location.href = '/software_development';
+    else if (tabKey === 'studies') window.location.href = '/csehigher_study';
+    else if (tabKey === 'exams') window.location.href = '/btech_cse/exams';
+  };
 
   return (
     <main className="relative min-h-screen w-full bg-gradient-to-b from-[#9bcde0] to-[#6ca8c1] p-4 sm:p-8 text-black font-sans overflow-hidden">
@@ -55,36 +70,31 @@ export default function Page() {
 
       {/* Main Content Area */}
       <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto pt-16">
-
         {/* Top Tab Buttons */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12">
           {tabs.map((tab) => (
-             <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out transform focus:outline-none
-                  ${
-                    activeTab === tab.key
-                      ? 'bg-white shadow-lg scale-105'
-                      : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'
-                  }`}
-              >
-                {tab.label}
-              </button>
+            <button
+              key={tab.key}
+              onMouseEnter={() => setHoveredTab(tab.key as keyof typeof contentData)}
+              onMouseLeave={() => setHoveredTab(null)}
+              onClick={() => handleTabClick(tab.key as keyof typeof contentData)}
+              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out transform focus:outline-none
+                ${hoveredTab === tab.key ? 'bg-white shadow-lg scale-105' : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'}`}
+            >
+              {tab.label}
+            </button>
           ))}
         </div>
 
         {/* Content Card */}
         <div className="bg-[#d1e6ec] bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 w-full min-h-[300px] flex flex-col justify-center shadow-2xl">
-            {/* The content inside changes based on the activeTab state */}
-            <h3 className="text-3xl lg:text-4xl mb-6 font-bold text-center">
-                {contentData[activeTab].title}
-            </h3>
-            <p className="text-md lg:text-lg leading-relaxed text-center">
-                {contentData[activeTab].description}
-            </p>
+          <h3 className="text-3xl lg:text-4xl mb-6 font-bold text-center">
+            {displayContent.title}
+          </h3>
+          <p className="text-md lg:text-lg leading-relaxed text-center">
+            {displayContent.description}
+          </p>
         </div>
-
       </div>
 
       {/* Footer Icons */}

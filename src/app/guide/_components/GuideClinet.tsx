@@ -16,7 +16,8 @@ export default function GuideClient({ subjects }: GuideClientProps) {
   
   // State to keep track of the currently selected subject
   const [selectedSubject, setSelectedSubject] = useState<GuideClientProps['subjects'][number] | null>(null);
-   const router = useRouter();
+  const [hoveredSubject, setHoveredSubject] = useState<GuideClientProps['subjects'][number] | null>(null);
+  const router = useRouter();
   // When the component loads, if there are subjects, select the first one by default.
   useEffect(() => {
     if (subjects && subjects.length > 0) {
@@ -63,7 +64,16 @@ export default function GuideClient({ subjects }: GuideClientProps) {
             {subjects.map((subject) => (
               <button
                 key={subject.id}
-                onClick={() => setSelectedSubject(subject)}
+                onMouseEnter={() => setHoveredSubject(subject)}
+                onMouseLeave={() => setHoveredSubject(null)}
+                onClick={() => {
+                  // Route based on subject name (slugify for path)
+                  const slug = subject.name
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '_')
+                    .replace(/^_|_$/g, '');
+                  router.push(`/${slug}`);
+                }}
                 className={`w-full text-left text-black text-lg p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none
                   ${
                     selectedSubject?.id === subject.id
@@ -79,21 +89,17 @@ export default function GuideClient({ subjects }: GuideClientProps) {
 
         {/* Right: Description Card */}
         <div className="w-full lg:w-2/3">
-          {selectedSubject && (
+          {hoveredSubject ? (
+            <div className="bg-[#cce3e9] bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 h-full flex flex-col justify-center min-h-[300px] shadow-2xl">
+              <h3 className="text-3xl lg:text-4xl mb-6">{hoveredSubject.name}</h3>
+              <p className="text-md lg:text-lg leading-relaxed">{hoveredSubject.description}</p>
+            </div>
+          ) : selectedSubject ? (
             <div className="bg-[#cce3e9] bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 h-full flex flex-col justify-center min-h-[300px] shadow-2xl">
               <h3 className="text-3xl lg:text-4xl mb-6">{selectedSubject.name}</h3>
               <p className="text-md lg:text-lg leading-relaxed">{selectedSubject.description}</p>
-
-              <div className="flex items-center justify-center">
-             <button
-                onClick={() => router.push('/start')}
-                className=" fixed bottom-5 bg-gray-200 text-gray-800 py-2.5 px-7 w-32 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-0"
-              >
-                <span>→</span> <span>CHOOSE</span>
-              </button>
-              </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
