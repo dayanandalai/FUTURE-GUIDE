@@ -42,11 +42,11 @@ export default function SoftwareDevelopmentPage() {
   // Handle navigation for each topic
   const handleTopicClick = (topicKey: string) => {
     if (topicKey === 'webstack') {
-      router.push('/btech_cse'); // Navigate to /btech_cse for webstack
+      router.push('/frontend'); // Navigate to /frontend for webstack
     } else if (topicKey === 'app') {
-      router.push('/btech_app'); // Example: navigate to /btech_app for app developer
+      router.push('/appdevelopment'); // Navigate to /appdevelopment for app developer
     } else if (topicKey === 'game') {
-      router.push('/btech_game'); // Example: navigate to /btech_game for game developing
+      router.push('/gamedevelopment'); // Navigate to /gamedevelopment for game developing
     }
   };
 
