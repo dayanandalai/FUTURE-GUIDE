@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link';
 // --- Data for all the job topics ---
 // This array drives the entire component.
 const jobTopics = [
@@ -67,24 +67,9 @@ export default function Page() {
 				<h1 className="text-lg">FUTURE GUIDE</h1>
 				<h2 className="text-lg hidden sm:block">ELEVATE</h2>
 				<nav className="flex gap-6 text-lg">
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						HOME
-					</a>
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						GUIDE
-					</a>
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						LOGIN
-					</a>
+					 <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+                     <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+                     <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
 				</nav>
 			</header>
 			<div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block">
@@ -103,14 +88,14 @@ export default function Page() {
 				{/* Grid of Topic Buttons */}
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 w-full mb-16">
 					{jobTopics.map((topic) => (
-						<button
+						<Link
 							key={topic.key}
-							onMouseEnter={() => setActiveTopicKey(topic.key)} // Update description on hover
-							onClick={() => router.push(topic.href)} // Navigate on click
-							className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg p-5 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none"
+							href={topic.href}
+							className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg p-5 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none flex items-center justify-center"
+							onMouseEnter={() => setActiveTopicKey(topic.key)}
 						>
 							{topic.title}
-						</button>
+						</Link>
 					))}
 				</div>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 // --- Data for the further opportunity topics ---
@@ -37,7 +37,6 @@ const furtherTopics = [
 ];
 
 export default function FurtherAiOpportunitiesPage() {
-	const router = useRouter();
 	const [activeTopicKey, setActiveTopicKey] = useState(furtherTopics[0].key);
 	const activeTopic = furtherTopics.find((topic) => topic.key === activeTopicKey);
 
@@ -50,24 +49,24 @@ export default function FurtherAiOpportunitiesPage() {
 					ELEVATE
 				</h2>
 				<nav className="flex gap-6 text-lg font-semibold">
-					<a
-						href="#"
+					<Link
+						href="/"
 						className="hover:text-white transition-colors"
 					>
 						HOME
-					</a>
-					<a
-						href="#"
+					</Link>
+					<Link
+						href="/firstpage"
 						className="hover:text-white transition-colors"
 					>
 						GUIDE
-					</a>
-					<a
-						href="#"
+					</Link>
+					<Link
+						href="/login"
 						className="hover:text-white transition-colors"
 					>
 						LOGIN
-					</a>
+					</Link>
 				</nav>
 			</header>
 			<div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block">

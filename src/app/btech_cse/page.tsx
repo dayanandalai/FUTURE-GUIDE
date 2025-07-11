@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import Link from 'next/link';
 
 // --- Data for the content cards ---
 // We store it in an object for easy lookup.
@@ -40,13 +41,6 @@ export default function Page() {
   const displayTab = hoveredTab;
   const displayContent = displayTab ? contentData[displayTab] : { title: defaultTitle, description: defaultDescription };
 
-  // Handle navigation for each tab
-  const handleTabClick = (tabKey: keyof typeof contentData) => {
-    if (tabKey === 'jobs') window.location.href = '/software_development';
-    else if (tabKey === 'studies') window.location.href = '/csehigher_study';
-    else if (tabKey === 'exams') window.location.href = '/btech_cse/exams';
-  };
-
   return (
     <main className="relative min-h-screen w-full bg-gradient-to-b from-[#9bcde0] to-[#6ca8c1] p-4 sm:p-8 text-black font-sans overflow-hidden">
       {/* Header Section */}
@@ -54,9 +48,9 @@ export default function Page() {
         <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
         <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg font-semibold">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+          <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
 
@@ -72,18 +66,25 @@ export default function Page() {
       <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto pt-16">
         {/* Top Tab Buttons */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onMouseEnter={() => setHoveredTab(tab.key as keyof typeof contentData)}
-              onMouseLeave={() => setHoveredTab(null)}
-              onClick={() => handleTabClick(tab.key as keyof typeof contentData)}
-              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out transform focus:outline-none
-                ${hoveredTab === tab.key ? 'bg-white shadow-lg scale-105' : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'}`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {tabs.map((tab) => {
+            let href = '';
+            if (tab.key === 'jobs') href = '/software_development';
+            else if (tab.key === 'studies') href = '/csehigher_study';
+            else if (tab.key === 'exams') href = '/btech_cse/exams';
+            return (
+              <Link
+                key={tab.key}
+                href={href}
+                className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out transform focus:outline-none ${
+                  hoveredTab === tab.key ? 'bg-white shadow-lg scale-105' : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'
+                }`}
+                onMouseEnter={() => setHoveredTab(tab.key as keyof typeof contentData)}
+                onMouseLeave={() => setHoveredTab(null)}
+              >
+                {tab.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Content Card */}

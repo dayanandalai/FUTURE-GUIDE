@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link';
 // --- Data for the technical degrees ---
 const technicalDegrees = [
 	{
@@ -62,15 +62,9 @@ export default function TechnicalGuidePage() {
 						<h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
 						<h2 className="text-lg font-semibold tracking-wider">ELEVATE</h2>
 						<nav className="flex gap-6 text-lg font-semibold">
-							<a href="#" className="hover:text-gray-300 transition-colors">
-								HOME
-							</a>
-							<a href="#" className="hover:text-gray-300 transition-colors">
-								GUIDE
-							</a>
-							<a href="/login" className="hover:text-gray-300 transition-colors">
-								LOGIN
-							</a>
+							<Link href="/" className="hover:text-white transition-colors">HOME</Link>
+							<Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+							<Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
 						</nav>
 					</header>
 
@@ -80,15 +74,15 @@ export default function TechnicalGuidePage() {
 						<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
 							{technicalDegrees.map((degree) =>
 								degree.key === 'btech' ? (
-									<button
+									<Link
 										key={degree.key}
-										onClick={() => (window.location.href = '/technical_guide')}
+										href="/technical_guide"
 										className="bg-[#d1e6ec] text-black rounded-3xl p-6 shadow-xl flex items-center justify-center h-48 hover:bg-white hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
 									>
 										<span className="text-xl font-bold text-center whitespace-pre-line leading-tight">
 											{degree.title}
 										</span>
-									</button>
+									</Link>
 								) : (
 									<button
 										key={degree.key}

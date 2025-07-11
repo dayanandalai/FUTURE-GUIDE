@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import Link from 'next/link'
 
 // Data for the software development sub-topics. No changes needed here.
 const devTopics = [
@@ -29,26 +29,12 @@ const devTopics = [
   },
 ];
 
-
 export default function SoftwareDevelopmentPage() {
-  const router = useRouter();
-
   // Default description and title use the first topic (webstack)
   const defaultTitle = devTopics[0].title;
   const defaultDescription = devTopics[0].description;
   const [activeTopicKey, setActiveTopicKey] = useState<string | null>(null);
   const activeTopic = devTopics.find(topic => topic.key === activeTopicKey);
-
-  // Handle navigation for each topic
-  const handleTopicClick = (topicKey: string) => {
-    if (topicKey === 'webstack') {
-      router.push('/frontend'); // Navigate to /frontend for webstack
-    } else if (topicKey === 'app') {
-      router.push('/appdevelopment'); // Navigate to /appdevelopment for app developer
-    } else if (topicKey === 'game') {
-      router.push('/gamedevelopment'); // Navigate to /gamedevelopment for game developing
-    }
-  };
 
   return (
     <main className="relative min-h-screen w-full bg-gradient-to-b from-[#8ebfdb] to-[#6099b8] p-4 sm:p-8 text-black font-sans overflow-hidden">
@@ -57,9 +43,9 @@ export default function SoftwareDevelopmentPage() {
         <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
         <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg font-semibold">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+          <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
       <div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>
@@ -72,15 +58,15 @@ export default function SoftwareDevelopmentPage() {
         {/* Grid of Topic Buttons */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-16">
           {devTopics.map((topic) => (
-            <button
+            <Link
               key={topic.key}
+              href={topic.key === 'webstack' ? '/frontend' : topic.key === 'app' ? '/appdevelopment' : topic.key === 'game' ? '/gamedevelopment' : topic.href}
+              className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-5 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none flex items-center justify-center"
               onMouseEnter={() => setActiveTopicKey(topic.key)}
               onMouseLeave={() => setActiveTopicKey(null)}
-              onClick={() => handleTopicClick(topic.key)}
-              className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-5 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none"
             >
               <span className="whitespace-pre-line leading-tight">{topic.title}</span>
-            </button>
+            </Link>
           ))}
         </div>
 

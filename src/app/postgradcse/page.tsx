@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link'
 // --- Data for the postgraduate degree topics ---
 const degreeTopics = [
   {
@@ -38,8 +37,6 @@ const degreeTopics = [
 
 
 export default function PostgraduateDegreesPage() {
-  const router = useRouter();
-  
   // State to track the currently hovered topic. Default to the first one.
   const [activeTopicKey, setActiveTopicKey] = useState(degreeTopics[0].key);
 
@@ -53,9 +50,9 @@ export default function PostgraduateDegreesPage() {
         <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
         <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg font-semibold">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+          <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
       <div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>
@@ -69,17 +66,14 @@ export default function PostgraduateDegreesPage() {
         {/* Topic Buttons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full mb-16 px-4">
           {degreeTopics.map((topic) => (
-             <button
-                key={topic.key}
-                onMouseEnter={() => setActiveTopicKey(topic.key)}
-                onClick={() => {
-                  if (topic.key === 'mtech') router.push('/csemtech');
-                  else router.push(topic.href);
-                }}
-                className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none"
-              >
-                {topic.title}
-              </button>
+            <Link
+              key={topic.key}
+              href={topic.key === 'mtech' ? '/csemtech' : topic.href}
+              className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none flex items-center justify-center"
+              onMouseEnter={() => setActiveTopicKey(topic.key)}
+            >
+              {topic.title}
+            </Link>
           ))}
         </div>
 

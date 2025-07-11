@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link'
 // --- Data for the Web Stack roles ---
 const webRoles = [
 	{
@@ -58,14 +58,14 @@ export default function WebStackPage() {
 		<main className="relative min-h-screen w-full bg-gradient-to-b from-[#8ebfdb] to-[#6099b8] p-4 sm:p-8 text-black font-sans overflow-hidden">
 			{/* Header and Vertical Text */}
 			<header className="flex justify-between items-center w-full mb-8 px-4">
-				<h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
-				<h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
-				<nav className="flex gap-6 text-lg font-semibold">
-					<a href="#" className="hover:text-white transition-colors">HOME</a>
-					<a href="#" className="hover:text-white transition-colors">GUIDE</a>
-					<a href="#" className="hover:text-white transition-colors">LOGIN</a>
-				</nav>
-			</header>
+                <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
+                <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
+                <nav className="flex gap-6 text-lg font-semibold">
+                    <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+                    <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+                    <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
+                </nav>
+            </header>
 			<div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>
 			<div className="absolute right-4 top-1/2 -translate-y-1/2 transform rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>
 

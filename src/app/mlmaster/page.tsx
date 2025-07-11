@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link'
 // --- Data for the two main tabs on this page ---
 const opportunityTopics = [
   {
@@ -24,8 +23,6 @@ const opportunityTopics = [
 
 
 export default function MtechMlPage() {
-  const router = useRouter();
-  
   // State to track the currently hovered tab. Default to the first one.
   const [activeTabKey, setActiveTabKey] = useState(opportunityTopics[0].key);
 
@@ -39,9 +36,9 @@ export default function MtechMlPage() {
         <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
         <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg font-semibold">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+           <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
       <div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>
@@ -55,18 +52,14 @@ export default function MtechMlPage() {
         {/* Topic Buttons */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6 w-full mb-16">
           {opportunityTopics.map((topic) => (
-             <button
-                key={topic.key}
-                onMouseEnter={() => setActiveTabKey(topic.key)}
-                onClick={() => {
-                  if (topic.key === 'career') router.push('/mlcareer');
-                  else if (topic.key === 'further') router.push('/mlfuther');
-                  else router.push(topic.href);
-                }}
-                className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-8 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none w-full sm:w-auto"
-              >
-                {topic.title}
-              </button>
+            <Link
+              key={topic.key}
+              href={topic.key === 'career' ? '/mlcareer' : topic.key === 'further' ? '/mlfuther' : topic.href}
+              className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-8 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none w-full sm:w-auto"
+              onMouseEnter={() => setActiveTabKey(topic.key)}
+            >
+              {topic.title}
+            </Link>
           ))}
         </div>
 

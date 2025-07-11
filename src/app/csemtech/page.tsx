@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link  from 'next/link'
 // --- Data for the M.Tech specializations ---
 // Using '\n' for line breaks where needed.
 const mtechTopics = [
@@ -80,24 +80,9 @@ function MTechPage() {
 					ELEVATE
 				</h2>
 				<nav className="flex gap-6 text-lg font-semibold">
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						HOME
-					</a>
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						GUIDE
-					</a>
-					<a
-						href="#"
-						className="hover:text-white transition-colors"
-					>
-						LOGIN
-					</a>
+					 <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+                     <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+                     <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
 				</nav>
 			</header>
 			<div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block">
@@ -115,24 +100,24 @@ function MTechPage() {
 
 				{/* Topic Buttons */}
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-5 w-full mb-16 px-4">
-					{mtechTopics.map((topic) => (
-						<button
-							key={topic.key}
-							onMouseEnter={() => setActiveTopicKey(topic.key)}
-							onClick={() => {
-								if (topic.key === 'cse') router.push('/csemaster');
-								else if (topic.key === 'ai') router.push('/aimaster');
-								else if (topic.key === 'ml') router.push('/mlmaster');
-								else if (topic.key === 'cyber') router.push('/cybermaster');
-								else router.push(topic.href);
-							}}
-							className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none flex items-center justify-center min-h-[80px] w-full md:w-auto lg:w-full"
-						>
-							<span className="whitespace-pre-line leading-tight">
-								{topic.title}
-							</span>
-						</button>
-					))}
+					{mtechTopics.map((topic) => {
+						let href = '';
+						if (topic.key === 'cse') href = '/csemaster';
+						else if (topic.key === 'ai') href = '/aimaster';
+						else if (topic.key === 'ml') href = '/mlmaster';
+						else if (topic.key === 'cyber') href = '/cybermaster';
+						else href = topic.href;
+						return (
+							<Link
+								key={topic.key}
+								href={href}
+								className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg font-semibold px-6 py-4 rounded-full transition-all duration-300 ease-in-out transform focus:outline-none flex items-center justify-center min-h-[80px] w-full md:w-auto lg:w-full"
+								onMouseEnter={() => setActiveTopicKey(topic.key)}
+							>
+								<span className="whitespace-pre-line leading-tight">{topic.title}</span>
+							</Link>
+						);
+					})}
 				</div>
 
 				{/* Description Card */}

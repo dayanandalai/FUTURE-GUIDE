@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link'
 // --- Data for the further opportunity topics ---
 const furtherTopics = [
   {
@@ -37,9 +37,9 @@ export default function FurtherMlOpportunitiesPage() {
         <h1 className="text-lg font-semibold tracking-wider">FUTURE GUIDE</h1>
         <h2 className="text-lg font-semibold tracking-wider hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg font-semibold">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+          <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
       <div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block"><span className="text-lg font-semibold tracking-widest">ELEVATE</span></div>

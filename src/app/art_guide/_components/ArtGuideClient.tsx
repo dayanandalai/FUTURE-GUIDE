@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { type Subject } from '@prisma/client';
+import Link from 'next/link';
 
 interface ArtGuideClientProps {
   subjects: Subject[];
@@ -37,43 +38,36 @@ export default function ArtGuideClient({ subjects }: ArtGuideClientProps) {
           ELEVATE
         </h2>
         <nav className="flex gap-8 text-lg font-medium">
-          <a href="#" className="hover:text-white transition-colors">
-            HOME
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            GUIDE
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            LOGIN
-          </a>
+          <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+           <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
       <div className="flex flex-1 w-full h-full">
         {/* Sidebar on the left */}
-        <aside className=" fixed top-0 left-0 bg-[#a80000] w-full max-w-xs min-w-[320px] h-full flex flex-col justify-between  p-8  ml-65 z-10">
+        <aside className="fixed top-0 left-0 bg-[#a80000] w-full max-w-xs min-w-[320px] h-full flex flex-col justify-between p-8 ml-65 z-10">
           <div className="flex flex-col gap-6 mt-8">
-            {subjects.map((subject) => (
-              <button
-                key={subject.id}
-                className={`w-full py-3 px-4 rounded-full font-normal text-lg bg-white hover:bg-[#e0e0e0] transition-colors border-2 border-black shadow text-black ${
-                  selectedSubject?.id === subject.id
-                    ? 'bg-[#fff] border-4 border-[#222]'
-                    : ''
-                }`}
-                onMouseEnter={() => setHoveredSubject(subject)}
-                onMouseLeave={() => setHoveredSubject(null)}
-                onClick={() => {
-                  // Route based on subject name (slugify for path)
-                  const slug = subject.name
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '_')
-                    .replace(/^_|_$/g, '');
-                  router.push(`/${slug}`);
-                }}
-              >
-                {subject.name}
-              </button>
-            ))}
+            {subjects.map((subject) => {
+              const slug = subject.name
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '_')
+                .replace(/^_|_$/g, '');
+              return (
+                <Link
+                  key={subject.id}
+                  href={`/${slug}`}
+                  className={`w-full py-3 px-4 rounded-full font-normal text-lg bg-white hover:bg-[#e0e0e0] transition-colors border-2 border-black shadow text-black ${
+                    selectedSubject?.id === subject.id
+                      ? 'bg-[#fff] border-4 border-[#222]'
+                      : ''
+                  }`}
+                  onMouseEnter={() => setHoveredSubject(subject)}
+                  onMouseLeave={() => setHoveredSubject(null)}
+                >
+                  {subject.name}
+                </Link>
+              );
+            })}
           </div>
         </aside>
         {/* Main Content */}

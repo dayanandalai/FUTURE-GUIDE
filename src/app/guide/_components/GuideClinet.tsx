@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import Link from 'next/link';
 
 interface GuideClientProps {
   subjects: {
@@ -13,11 +13,9 @@ interface GuideClientProps {
 }
 
 export default function GuideClient({ subjects }: GuideClientProps) {
-  
   // State to keep track of the currently selected subject
   const [selectedSubject, setSelectedSubject] = useState<GuideClientProps['subjects'][number] | null>(null);
   const [hoveredSubject, setHoveredSubject] = useState<GuideClientProps['subjects'][number] | null>(null);
-  const router = useRouter();
   // When the component loads, if there are subjects, select the first one by default.
   useEffect(() => {
     if (subjects && subjects.length > 0) {
@@ -41,9 +39,9 @@ export default function GuideClient({ subjects }: GuideClientProps) {
         <h1 className="text-lg">FUTURE GUIDE</h1>
         <h2 className="text-lg hidden sm:block">ELEVATE</h2>
         <nav className="flex gap-6 text-lg">
-          <a href="#" className="hover:text-white transition-colors">HOME</a>
-          <a href="#" className="hover:text-white transition-colors">GUIDE</a>
-          <a href="#" className="hover:text-white transition-colors">LOGIN</a>
+           <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+          <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+           <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
         </nav>
       </header>
 
@@ -61,29 +59,20 @@ export default function GuideClient({ subjects }: GuideClientProps) {
         {/* Left: Subject List */}
         <div className="w-full lg:w-1/3 flex-shrink-0">
           <div className="flex flex-wrap lg:flex-col gap-4">
-            {subjects.map((subject) => (
-              <button
-                key={subject.id}
-                onMouseEnter={() => setHoveredSubject(subject)}
-                onMouseLeave={() => setHoveredSubject(null)}
-                onClick={() => {
-                  // Route based on subject name (slugify for path)
-                  const slug = subject.name
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '_')
-                    .replace(/^_|_$/g, '');
-                  router.push(`/${slug}`);
-                }}
-                className={`w-full text-left text-black text-lg p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none
-                  ${
-                    selectedSubject?.id === subject.id
-                      ? 'bg-white shadow-lg scale-105'
-                      : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'
-                  }`}
-              >
-                {subject.name}
-              </button>
-            ))}
+            {subjects.map((subject) => {
+              const slug = subject.name
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '_')
+                .replace(/^_|_$/g, '');
+              return (
+                <Link href={`/${slug}`} key={subject.id} className={`w-full text-left text-black text-lg p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none ${selectedSubject?.id === subject.id ? 'bg-white shadow-lg scale-105' : 'bg-gray-300 bg-opacity-70 hover:bg-gray-200'}`}
+                  onMouseEnter={() => setHoveredSubject(subject)}
+                  onMouseLeave={() => setHoveredSubject(null)}
+                >
+                  {subject.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
 

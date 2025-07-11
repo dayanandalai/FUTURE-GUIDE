@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'; // Import useRouter
 
 // Replace with your actual image paths in the /public folder
 const treeImageSrc = '/images/image-tree-on-cliff.png';
-const ctaBgImageSrc = '/images/image-cta-background.png';
+const ctaBgImageSrc = '/images/image-cta-background.jpg';
 
 // Colors for the hero gradient (approximated from your image)
 const HERO_GRADIENT_FROM = '#0D6EFF'; // Vibrant Blue
@@ -53,7 +53,7 @@ export default function HomePage() {
             </Link>
             <div className="space-x-3 md:space-x-6 text-xs md:text-sm text-white">
               <Link href="#" className="hover:text-gray-300">HOME</Link>
-              <Link href="#" className="hover:text-gray-300">GUIDE</Link>
+              <Link href="/firstpage" className="hover:text-gray-300">GUIDE</Link>
               {/* UPDATED NAV LOGIN BUTTON */}
               <button onClick={() => router.push('/login')} className="hover:text-gray-400">LOGIN</button>
             </div>
@@ -67,7 +67,7 @@ export default function HomePage() {
               </h1>
               {/* UPDATED START BUTTON */}
               <button
-                onClick={() => router.push('/start')}
+                onClick={() => router.push('/firstpage')}
                 className="bg-gray-200 text-gray-800 py-2.5 px-7 rounded-xl font-semibold hover:bg-gray-400 transition-colors shadow-md text-sm flex items-center justify-center space-x-2 mx-auto md:mx-0"
               >
                 <span>→</span> <span>START</span>
@@ -177,7 +177,7 @@ export default function HomePage() {
               Learn More
             </button>
             <button
-              onClick={() => handleAlertClick('Sign Up (Path Section)')} // Using alert for this for now
+              onClick={() => router.push('/signup')}
               className="text-white hover:underline font-semibold text-sm"
             >
               Sign Up →
@@ -197,7 +197,7 @@ export default function HomePage() {
             Join us for personalized career guidance and planning tools tailored just for you.
           </p>
           <button
-            onClick={() => handleAlertClick('Sign Up (CTA)')} // Using alert for this for now
+            onClick={() => router.push('/signup')}
             className="bg-white text-slate-800 py-2.5 px-7 rounded-md font-semibold hover:bg-gray-200 transition-colors shadow-md text-sm"
           >
             Sign Up

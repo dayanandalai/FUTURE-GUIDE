@@ -1,145 +1,186 @@
+// app/signup/page.tsx (or your sign-up route)
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
+import { useToast } from "@/hooks/use-toast"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 
-export default function SignUp() {
+// --- Left Panel Component (Identical to Sign-In page for consistency) ---
+const LeftPanel = () => (
+  <div className="relative hidden lg:flex flex-col items-center justify-center min-h-screen bg-black text-white p-12">
+    <Image
+      src="/images/sign.jpg" // IMPORTANT: Use the same background image
+      alt="Abstract tech background"
+      fill
+      className="object-cover opacity-30"
+    />
+    <div className="relative z-10 w-full">
+      <div className="mb-8 h-10 w-10 rounded-full bg-white" />
+      <h1 className="text-4xl font-bold leading-tight mb-4">Design with us</h1>
+      <p className="text-lg text-white/80 max-w-sm">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis.
+      </p>
+    </div>
+  </div>
+);
+
+// --- Main SignUp Page Component ---
+export default function SignUpPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  // const [error, setError] = useState<string | null>(null) // Removed UI error state
+
   const router = useRouter()
+  const { toast } = useToast()
   const { setIsAuthenticated, setUserId } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // setError(null) // No longer needed
 
     if (password !== confirmPassword) {
-      console.error("Passwords do not match. Please ensure your passwords match.") // Log error to terminal
+      toast({
+        title: "Password Mismatch",
+        description: "Please ensure your passwords match.",
+        variant: "destructive",
+      })
       setIsLoading(false)
       return
     }
 
     try {
-      console.log('Sending signup request...')
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
       })
-
       const data = await res.json()
-      console.log('Signup response:', data)
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong')
-      }
+      if (!res.ok) throw new Error(data.error || 'Something went wrong')
 
+      toast({
+        title: "Account Created!",
+        description: "Let's set up your profile.",
+      })
+      
       setIsAuthenticated(true)
       setUserId(data.userId)
-
-      console.log("Account created successfully. Let's set up your profile!") // Log to console
-
-      router.push('/profile/edit')
+      router.push('/firstpage')
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Something went wrong'
-      console.error('Signup error:', errorMessage) // Log full error to terminal
-      // setError(errorMessage) // No longer setting UI error
+      toast({
+        title: "Sign-up Error",
+        description: errorMessage,
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
-      <main className="flex-grow flex items-center justify-center w-full">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>Create your SkillSwap account</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              {/* Removed error display block */}
-              {/*
-              {error && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                  {error}
-                </div>
-              )}
-              */}
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="password">Password</Label>
+    <div className="min-h-screen bg-white">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+        <LeftPanel />
+
+        {/* Right Panel: Sign-Up Form */}
+        <div className="flex flex-col justify-center items-center p-6 sm:p-8">
+          <div className="w-full max-w-sm">
+            <div className="text-right mb-12">
+              <span className="text-sm text-gray-600">Already have an account? </span>
+              <Link href="/signin" className="text-sm font-semibold text-black underline hover:text-gray-700">
+                Sign in
+              </Link>
+            </div>
+
+            <h2 className="text-3xl font-bold mb-8">Sign up</h2>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <Label htmlFor="name" className="text-sm font-medium text-gray-500">Your name</Label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="mt-1 h-12 rounded-lg"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="email" className="text-sm font-medium text-gray-500">Email address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="mt-1 h-12 rounded-lg"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="password" className="text-sm font-medium text-gray-500">Password</Label>
+                <div className="relative mt-1">
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    disabled={isLoading}
+                    className="h-12 rounded-lg pr-12"
                   />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
+              </div>
+              
+              <div>
+                <Label htmlFor="confirm-password" className="text-sm font-medium text-gray-500">Confirm Password</Label>
+                <div className="relative mt-1">
                   <Input
                     id="confirm-password"
-                    type="password"
+                    type={showConfirmPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
+                    disabled={isLoading}
+                    className="h-12 rounded-lg pr-12"
                   />
+                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
-              <Button className="w-full mt-6" type="submit" disabled={isLoading}>
-                {isLoading ? 'Signing up...' : 'Sign Up'}
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full h-12 rounded-lg bg-gray-300 text-black font-semibold hover:bg-gray-400 text-base mt-2"
+              >
+                {isLoading ? "Signing up..." : "Sign up"}
               </Button>
             </form>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Link href="/signin" className="text-sm text-muted-foreground hover:text-primary">
-              Already have an account? Sign in
-            </Link>
-          </CardFooter>
-        </Card>
-      </main>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

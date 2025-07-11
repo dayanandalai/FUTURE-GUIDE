@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaInstagram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-
+import Link from 'next/link'
 // --- Data for the higher studies topics ---
 // Using '\n' for line breaks in the button titles.
 const studyTopics = [
@@ -41,15 +41,9 @@ function HigherStudiesPage() {
 				<h1 className="text-lg">FUTURE GUIDE</h1>
 				<h2 className="text-lg hidden sm:block">ELEVATE</h2>
 				<nav className="flex gap-6 text-lg">
-					<a href="#" className="hover:text-white transition-colors">
-						HOME
-					</a>
-					<a href="#" className="hover:text-white transition-colors">
-						GUIDE
-					</a>
-					<a href="#" className="hover:text-white transition-colors">
-						LOGIN
-					</a>
+					 <Link href="/" className="hover:text-white transition-colors">HOME</Link>
+                     <Link href="/firstpage" className="hover:text-white transition-colors">GUIDE</Link>
+                     <Link href="/login" className="hover:text-white transition-colors">LOGIN</Link>
 				</nav>
 			</header>
 			<div className="absolute left-4 top-1/2 -translate-y-1/2 transform -rotate-90 origin-center hidden lg:block">
@@ -69,23 +63,22 @@ function HigherStudiesPage() {
 				<div className="flex flex-col md:flex-row justify-center items-start gap-10 w-full mb-16">
 					{/* Buttons Column */}
 					<div className="flex flex-col gap-6 w-full md:w-1/3">
-						{studyTopics.map((topic) => (
-							<button
-								key={topic.key}
-								onMouseEnter={() => setActiveTopicKey(topic.key)}
-								onClick={() => {
-									if (topic.key === 'degrees') router.push('/postgradcse');
-									else if (topic.key === 'certs') router.push('/csediploma');
-									else router.push(topic.href);
-								}}
-								className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg px-8 py-8 rounded-3xl transition-all duration-300 ease-in-out transform focus:outline-none w-full"
-							>
-								{/* whitespace-pre-line respects the \n characters for multi-line text */}
-								<span className="whitespace-pre-line leading-tight">
-									{topic.title}
-								</span>
-							</button>
-						))}
+						{studyTopics.map((topic) => {
+							let href = '';
+							if (topic.key === 'degrees') href = '/postgradcse';
+							else if (topic.key === 'certs') href = '/csediploma';
+							else href = topic.href;
+							return (
+								<Link
+									key={topic.key}
+									href={href}
+									className="bg-gray-300 bg-opacity-70 hover:bg-white hover:shadow-lg hover:scale-105 text-black text-center text-lg px-8 py-8 rounded-3xl transition-all duration-300 ease-in-out transform focus:outline-none w-full flex items-center justify-center"
+									onMouseEnter={() => setActiveTopicKey(topic.key)}
+								>
+									<span className="whitespace-pre-line leading-tight">{topic.title}</span>
+								</Link>
+							);
+						})}
 					</div>
 
 					{/* Description Card Column */}
