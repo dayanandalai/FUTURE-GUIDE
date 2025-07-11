@@ -41,9 +41,13 @@ const LeftPanel = () => (
     />
     <div className="relative z-10 w-full">
       <div className="mb-8 h-10 w-10 rounded-full bg-white" />
-      <h1 className="text-4xl font-bold leading-tight mb-4">Design with us</h1>
-      <p className="text-lg text-white/80 max-w-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis.
+      <h1 className="text-4xl font-bold leading-tight mb-4">Your Next Chapter Starts Here</h1>
+      <p className="text-left text-lg text-white/90 max-w-xl leading-relaxed">
+        Finishing high school is a major milestone — and what comes next can feel both exciting and overwhelming.<br /><br />
+        Whether you&apos;re a student wondering which path to follow, or a parent looking to support your child in making the right decision, our platform is here to help.<br /><br />
+        We provide personalized career guidance, easy-to-understand insights, and expert tools designed for students stepping into the real world.<br /><br />
+        From discovering suitable courses and careers to helping you plan your academic and professional future, we make it easier to move forward with confidence.<br /><br />
+        <span className="font-semibold text-white">Join us today and take the first step toward building a brighter, more focused tomorrow.</span>
       </p>
     </div>
   </div>

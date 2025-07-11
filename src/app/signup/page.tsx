@@ -24,10 +24,14 @@ const LeftPanel = () => (
     />
     <div className="relative z-10 w-full">
       <div className="mb-8 h-10 w-10 rounded-full bg-white" />
-      <h1 className="text-4xl font-bold leading-tight mb-4">Design with us</h1>
-      <p className="text-lg text-white/80 max-w-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis.
-      </p>
+      <h1 className="text-4xl font-bold leading-tight mb-4">Unlock Your Future with Personalized Career Guidance</h1>
+        <p className="text-left text-lg text-white/90 max-w-xl leading-relaxed">
+          Every great journey begins with a single step — and this is yours.<br /><br />
+          By creating an account, you&apos;re joining a community dedicated to helping individuals like you find clarity, direction, and success in their careers.<br /><br />
+          Whether you&apos;re unsure where to begin or already have a dream in mind, our platform will support you with expert guidance.<br /><br />
+          From exploring career options to tracking your progress, everything starts here.<br /><br />
+          <span className="font-semibold text-white">Sign up today and take the first confident step toward shaping a future you&apos;ll be proud of.</span>
+        </p>
     </div>
   </div>
 );
@@ -101,7 +105,7 @@ export default function SignUpPage() {
           <div className="w-full max-w-sm">
             <div className="text-right mb-12">
               <span className="text-sm text-gray-600">Already have an account? </span>
-              <Link href="/signin" className="text-sm font-semibold text-black underline hover:text-gray-700">
+              <Link href="/login" className="text-sm font-semibold text-black underline hover:text-gray-700">
                 Sign in
               </Link>
             </div>
