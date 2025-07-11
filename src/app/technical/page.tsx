@@ -29,8 +29,9 @@ const technicalDegrees = [
 ];
 
 export default function TechnicalGuidePage() {
-	const [activeDegreeKey, setActiveDegreeKey] = useState(technicalDegrees[0].key);
+	const [activeDegreeKey, setActiveDegreeKey] = useState<string | null>(null);
 	const activeDegree = technicalDegrees.find((degree) => degree.key === activeDegreeKey);
+	const defaultDegree = technicalDegrees.find((degree) => degree.key === 'btech');
 
 	return (
 		<main className="relative min-h-screen w-full font-sans overflow-hidden">
@@ -77,6 +78,8 @@ export default function TechnicalGuidePage() {
 									<Link
 										key={degree.key}
 										href="/technical_guide"
+										onMouseEnter={() => setActiveDegreeKey('btech')}
+										onMouseLeave={() => setActiveDegreeKey(null)}
 										className="bg-[#d1e6ec] text-black rounded-3xl p-6 shadow-xl flex items-center justify-center h-48 hover:bg-white hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
 									>
 										<span className="text-xl font-bold text-center whitespace-pre-line leading-tight">
@@ -87,6 +90,7 @@ export default function TechnicalGuidePage() {
 									<button
 										key={degree.key}
 										onMouseEnter={() => setActiveDegreeKey(degree.key)}
+										onMouseLeave={() => setActiveDegreeKey(null)}
 										className="bg-[#d1e6ec] text-black rounded-3xl p-6 shadow-xl flex items-center justify-center h-48 hover:bg-white hover:scale-105 transition-all duration-300 ease-in-out"
 									>
 										<span className="text-xl font-bold text-center whitespace-pre-line leading-tight">
@@ -98,16 +102,14 @@ export default function TechnicalGuidePage() {
 						</div>
 
 						{/* Bottom Description Card */}
-						{activeDegree && (
-							<div className="bg-[#d1e6ec] text-black rounded-3xl p-8 shadow-xl w-full">
-								<h3 className="text-2xl font-bold text-center mb-4">
-									{activeDegree.descriptionTitle}
-								</h3>
-								<p className="text-lg text-center leading-relaxed">
-									{activeDegree.description}
-								</p>
-							</div>
-						)}
+						<div className="bg-[#d1e6ec] text-black rounded-3xl p-8 shadow-xl w-full">
+							<h3 className="text-2xl font-bold text-center mb-4">
+								{(activeDegree ? activeDegree.descriptionTitle : defaultDegree?.descriptionTitle) || ''}
+							</h3>
+							<p className="text-lg text-center leading-relaxed">
+								{(activeDegree ? activeDegree.description : defaultDegree?.description) || ''}
+							</p>
+						</div>
 					</div>
 				</div>
 
